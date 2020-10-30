@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import defaultBookCover from '../img/book';
 import BooksDeck from './BooksDeck';
 import AddBookCard from './AddBookCard';
-import Book from './Book';
 // import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 
 export default function BooksHandler() {
@@ -64,6 +64,7 @@ export default function BooksHandler() {
       fileCover: bookCover,
       ...form,
     };
+    body.key = uuidv4();
     console.log('==== sendForm', body);
     await fetch(url, {
       method: 'POST',
@@ -90,7 +91,7 @@ export default function BooksHandler() {
       .then((response) => response.json())
       .then((data) => {
         console.log('====== data', data);
-        setCards(data.map((elem) => Book(elem)));
+        setCards(data);
       });
   }, []);
 

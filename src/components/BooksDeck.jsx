@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Container,
-  Form,
-  Button,
-  CardDeck,
-  Modal,
-} from 'react-bootstrap';
+import { Container, Form, Button, CardDeck, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import Book from './Book';
 
 export default function BooksDeck({
   show,
@@ -25,7 +20,7 @@ export default function BooksDeck({
     <>
       <Container>
         <CardDeck className="d-flex flex-wrap">
-          {cards}
+          {cards.map((elem) => Book(elem))}
           <AddBookCard openForm={openForm} />
         </CardDeck>
       </Container>
@@ -112,6 +107,8 @@ BooksDeck.propTypes = {
     message: PropTypes.string,
   }).isRequired,
   sendForm: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cards: PropTypes.any.isRequired,
 };
 
 BooksDeck.defaultProps = {

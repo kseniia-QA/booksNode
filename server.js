@@ -91,7 +91,7 @@ router.post('/api/user/login', async (ctx, next) => {
 
 router.post('/api/books', async (ctx, next) => {
   const book = JSON.parse(ctx.request.body);
-  book.key = book.title + books.length;
+  // book.key = book.title + books.length;
   books.push(book);
   // console.log(ctx.request.querystring, 'string');
   // const users = [

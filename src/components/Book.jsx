@@ -13,20 +13,11 @@ export default function Book({
   key,
   favorit,
 }) {
-  console.log();
-
   const btn = !favorit ? (
-    <Button variant="success">
-      Add to favorite
-    </Button>
+    <Button variant="success">Add to favorite</Button>
   ) : (
-    <Button variant="secondary">
-      Delete from favorite
-    </Button>
+    <Button variant="secondary">Delete from favorite</Button>
   );
-
-  // const openForm = () => formShow(true);
-  // const closeForm = () => formShow(false);
 
   const onClick = async (event) => {
     if (event.target.tagName === 'BUTTON') {
