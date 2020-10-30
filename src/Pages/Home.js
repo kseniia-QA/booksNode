@@ -1,10 +1,10 @@
 import React from 'react'
-import CarouselBox from '../components/CarouselBox';
+import BooksHandler from '../components/BooksHandler';
 
 export default function Home() {
   return (
     <div>
-      <CarouselBox />
+      <BooksHandler />
     </div>
   )
 }

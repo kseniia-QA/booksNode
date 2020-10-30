@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar, Container, Nav, Form, Button, Modal } from 'react-bootstrap';
 // import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import logo from '../img/books_image.png';
-import onAuthHandler from './onAuthHandler';
 
-export default function Header() {
-  const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+export default function Header({
+  changeForm,
+  sendForm,
+  switchStatus,
+  valid,
+  handleClose,
+  show,
+  logBtn,
+}) {
   return (
     <>
       <Navbar
@@ -30,46 +34,55 @@ export default function Header() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ml-auto">
-              <Button variant="warning" onClick={handleShow}>
-                Log in
-              </Button>
-            </Nav>
+            <Nav className="ml-auto">{logBtn}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={!switchStatus}>
           <Modal.Title>Log in</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
-            onSubmit={onAuthHandler}
-            // onChange={(event) => {
-            //   this.prop = { [event.target]: event.target.value };
-            //   // console.log(event.target.value, this.prop);
-            // }}
+            onChange={(event) => changeForm(event)}
+            onSubmit={(event) => sendForm(event)}
           >
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="mail">
               <Form.Label>Your Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" required />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                required
+                disabled={switchStatus}
+              />
               <Form.Text className="text-muted">have fun!</Form.Text>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="pass">
               <Form.Label>Your password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter password"
+                disabled={switchStatus}
                 required
               />
             </Form.Group>
-            <Button variant="dark" onClick={handleClose}>
-              Cansel
+            <div
+              className={`mb-3 pl-4 text-danger font-weight-bold collapse ${valid.class}`}
+            >
+              {valid.message}
+            </div>
+            <Button
+              variant="dark"
+              onClick={handleClose}
+              disabled={switchStatus}
+            >
+              Cancel
             </Button>
             <Button
               className="ml-2"
               variant="success"
               type="submit"
+              disabled={switchStatus}
               // onClick={() => alert('отправлено')}
             >
               Submit
@@ -80,3 +93,18 @@ export default function Header() {
     </>
   );
 }
+
+Header.propTypes = {
+  // item: PropTypes.instanceOf(PurchaseModel).isRequired,
+  changeForm: PropTypes.func.isRequired,
+  sendForm: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  switchStatus: PropTypes.bool,
+  show: PropTypes.bool.isRequired,
+  logBtn: PropTypes.node.isRequired,
+  valid: PropTypes.shape({
+    class: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
+};
