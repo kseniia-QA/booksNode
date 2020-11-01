@@ -53,6 +53,8 @@ app.use(async (ctx, next) => {
 
     ctx.response.status = 204;
   }
+
+  return true;
 });
 
 const books = [];
@@ -62,7 +64,6 @@ app.use(async (ctx, next) => {
     'Access-Control-Allow-Origin': '*',
   });
 
-  ctx.response.body = 'server response1';
   await next();
 });
 
@@ -71,8 +72,25 @@ router.get('/api/books', async (ctx, next) => {
   await next();
 });
 
+router.get('/api/books/:id', async (ctx, next) => {
+  books.forEach((element) => {
+    if (element.key === ctx.params.id) {
+      const file = element.fileBook;
+      const regex = /^data:.+\/(.+);base64,(.*)$/;
+
+      const matches = file.match(regex);
+      const data = matches[2];
+      const buffer = Buffer.from(data, 'base64');
+
+      ctx.body = buffer;
+
+      ctx.set('Content-disposition', `attachment; filename=${element.fileName}`);
+    }
+  });
+  await next();
+});
+
 router.post('/api/user/login', async (ctx, next) => {
-  // console.log(ctx.request.querystring, 'string');
   const message = JSON.parse(ctx.request.body);
   const users = [
     { id: 1, mail: 'bropet@mail.ru', pass: '123' },
@@ -91,21 +109,7 @@ router.post('/api/user/login', async (ctx, next) => {
 
 router.post('/api/books', async (ctx, next) => {
   const book = JSON.parse(ctx.request.body);
-  // book.key = book.title + books.length;
   books.push(book);
-  // console.log(ctx.request.querystring, 'string');
-  // const users = [
-  //   { id: 1, mail: 'bropet@mail.ru', pass: '123' },
-  //   { id: 2, mail: 'test@test.com', pass: 'test' },
-  // ];
-  // let response = users.filter(
-  //   (elem) => !!(elem.mail === message.mail && elem.pass === message.pass),
-  // );
-  // response =
-  //   response.length !== 0
-  //     ? { id: response[0].id, mail: response[0].mail }
-  //     : { message: 'Неправильая почта или пароль' };
-  // ctx.body = JSON.stringify(message);
   await next();
 });
 
@@ -113,18 +117,19 @@ router.post('/api/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
-      elem.favorit = true;
+      elem.favorite = true;
     }
-  })
+  });
   await next();
 });
+
 router.del('/api/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
-      elem.favorit = false;
+      elem.favorite = false;
     }
-  })
+  });
   await next();
 });
 

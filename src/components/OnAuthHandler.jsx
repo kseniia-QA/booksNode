@@ -4,8 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Header from './Header';
 import Home from '../Pages/Home';
-import AboutBook from './../Pages/AboutBook';
-import Test from './../Pages/Test';
+import AboutBook from '../Pages/AboutBook';
 
 export default function OnAuthHandler() {
   const form = {
@@ -14,8 +13,6 @@ export default function OnAuthHandler() {
   };
   const changeForm = (event) => {
     form[event.target.id] = event.target.value;
-    // setForm(form);
-    // console.log('СHANGE', form);
   };
 
   const [switchStatus, setStatus] = useState(false);
@@ -97,39 +94,8 @@ export default function OnAuthHandler() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/book/:bookId" component={AboutBook} />
-          <Route exact path="/test" component={Test} />
         </Switch>
       </Router>
     </>
   );
 }
-
-// const response = await fetch(url);
-// const result = await response;
-// console.log(result.message);
-
-// await fetch(url)
-//   .then(async (response) => console.log(await response.text()))
-//   .catch((error) => { throw new Error(error.message) });
-
-// const xhr = new XMLHttpRequest();
-// xhr.open('GET', url, true);
-// // event listener here
-// xhr.send();
-
-// event.preventDefault();
-// const test = event;
-
-// console.log(test.target.value);
-
-// console.log(Array.from(subscribeForm.elements));
-
-// const queryString = Array.from(test)
-//   .filter(({ name }) => name)
-//   .map(({ name, value }) => `${name}=${encodeURIComponent(value)}`)
-//   .join('&');
-// const url = `http://localhost:7070/?${queryString}`;
-// const xhr = new XMLHttpRequest();
-// xhr.open('GET', url, true);
-// // event listener here
-// xhr.send();

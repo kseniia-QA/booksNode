@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Form, Button, CardDeck, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import Book from './Book';
 
 export default function BooksDeck({
@@ -9,18 +10,18 @@ export default function BooksDeck({
   closeForm,
   AddBookCard,
   bookCover,
-  // changeBookCover,
   changeForm,
   fail,
   sendForm,
   cards,
 }) {
-  // console.log(bookCover);
   return (
     <>
       <Container>
         <CardDeck className="d-flex flex-wrap">
-          {cards.map((elem) => Book(elem))}
+          {cards.map((elem) => (
+            <Book props={elem} key={uuidv4()} />
+          ))}
           <AddBookCard openForm={openForm} />
         </CardDeck>
       </Container>
@@ -53,11 +54,7 @@ export default function BooksDeck({
                   alt="book cover"
                   style={{ maxWidth: '100%' }}
                 />
-                <Form.File
-                  feedback="хуйло!"
-                  // onChange={changeBookCover}
-                  // ref={ function(ref) { this.fileUpload = ref }.bind(this) }
-                />
+                <Form.File />
               </div>
               <div
                 className={`mb-3 pl-4 text-danger font-weight-bold collapse ${fail.class}`}
@@ -75,9 +72,8 @@ export default function BooksDeck({
             </Form.Group>
             <Form.Group>
               <Form.Check
-                name="favorite"
                 label="add to favorite"
-                id="favorit"
+                id="favorite"
                 feedbackTooltip
               />
             </Form.Group>

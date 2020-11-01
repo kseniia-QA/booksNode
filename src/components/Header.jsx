@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navbar, Container, Nav, Form, Button, Modal } from 'react-bootstrap';
-// import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import logo from '../img/books_image.png';
 
@@ -83,7 +82,6 @@ export default function Header({
               variant="success"
               type="submit"
               disabled={switchStatus}
-              // onClick={() => alert('отправлено')}
             >
               Submit
             </Button>
@@ -95,7 +93,6 @@ export default function Header({
 }
 
 Header.propTypes = {
-  // item: PropTypes.instanceOf(PurchaseModel).isRequired,
   changeForm: PropTypes.func.isRequired,
   sendForm: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,

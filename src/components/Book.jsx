@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Card, Modal } from 'react-bootstrap';
-import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
-import AboutBook from './../Pages/AboutBook';
+import { Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export default function Book({
-  title,
-  description,
-  fileCover,
-  fileBook,
-  authors,
-  key,
-  favorit,
+  props: { title, fileCover, authors, key, favorite, description },
 }) {
-  const btn = !favorit ? (
+  const btn = !favorite ? (
     <Button variant="success">Add to favorite</Button>
   ) : (
     <Button variant="secondary">Delete from favorite</Button>
@@ -23,7 +16,7 @@ export default function Book({
     if (event.target.tagName === 'BUTTON') {
       event.preventDefault();
       const url = `http://localhost:7071/api/books/${key}`;
-      if (!favorit) {
+      if (!favorite) {
         await fetch(url, {
           method: 'POST',
           body: key,
@@ -34,16 +27,12 @@ export default function Book({
         });
       }
       window.location.reload();
-    } else {
-      // tort()
     }
   };
 
   return (
     <>
       <Card
-        href="example.com"
-        id="card"
         className="btn mt-3"
         onClick={onClick}
         key={key}
@@ -53,18 +42,26 @@ export default function Book({
           textAlign: 'center',
         }}
       >
-        {/* <Link
-          // style={{ textDecoration: 'none', color: 'white' }}
+        <Link
+          style={{
+            textDecoration: 'none',
+            color: 'white',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+          }}
           to={{
-            pathname: 'book/23',
+            pathname: `book/${key}`,
             state: {
-              ...{ title, description, fileCover, authors, favorit, key },
+              ...{ title, description, fileCover, authors, favorite, key },
             },
           }}
-        /> */}
-        <Card.Title style={{ margin: 'auto' }}>{title}</Card.Title>
-        <Card.Img src={fileCover} />
-        <Card.Text style={{ margin: 'auto' }}>{authors}</Card.Text>
+        >
+          <Card.Title style={{ margin: 'auto' }}>{title}</Card.Title>
+          <Card.Img src={fileCover} />
+          <Card.Text style={{ margin: 'auto' }}>{authors}</Card.Text>
+        </Link>
         {btn}
       </Card>
     </>
@@ -72,11 +69,13 @@ export default function Book({
 }
 
 Book.propTypes = {
-  // item: PropTypes.instanceOf(PurchaseModel).isRequired,
-  title: PropTypes.string.isRequired,
-  fileCover: PropTypes.string.isRequired,
-  fileBook: PropTypes.string.isRequired,
-  authors: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
-  favorit: PropTypes.bool.isRequired,
+  props: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    fileCover: PropTypes.string.isRequired,
+    fileBook: PropTypes.shape.isRequired,
+    authors: PropTypes.string.isRequired,
+    key: PropTypes.string.isRequired,
+    favorite: PropTypes.bool.isRequired,
+  }).isRequired,
 };
