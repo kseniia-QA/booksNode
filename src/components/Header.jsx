@@ -33,6 +33,14 @@ export default function Header({
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
+            {localStorage.mail ? (
+              <Nav.Link
+                href="/favorites"
+                className="font-weight-bold text-warning ml-4"
+              >
+                <h4>Favorites</h4>
+              </Nav.Link>
+            ) : null}
             <Nav className="ml-auto">{logBtn}</Nav>
           </Navbar.Collapse>
         </Container>

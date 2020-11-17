@@ -15,18 +15,20 @@ export default function Book({
   const onClick = async (event) => {
     if (event.target.tagName === 'BUTTON') {
       event.preventDefault();
-      const url = `http://localhost:7071/api/books/${key}`;
-      if (!favorite) {
-        await fetch(url, {
-          method: 'POST',
-          body: key,
-        });
+      const url = `${process.env.REACT_APP_URL}/api/favorites/books/${key}`;
+      const response = !favorite
+        ? await fetch(url, {
+            method: 'POST',
+            body: key,
+          })
+        : await fetch(url, {
+            method: 'DELETE',
+          });
+      if (response.ok) {
+        window.location.reload();
       } else {
-        await fetch(url, {
-          method: 'DELETE',
-        });
+        throw Error(response.statusText);
       }
-      window.location.reload();
     }
   };
 
@@ -62,7 +64,7 @@ export default function Book({
           <Card.Img src={fileCover} />
           <Card.Text style={{ margin: 'auto' }}>{authors}</Card.Text>
         </Link>
-        {btn}
+        {localStorage.mail ? btn : null}
       </Card>
     </>
   );

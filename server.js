@@ -84,7 +84,10 @@ router.get('/api/books/:id', async (ctx, next) => {
 
       ctx.body = buffer;
 
-      ctx.set('Content-disposition', `attachment; filename=${element.fileName}`);
+      ctx.set(
+        'Content-disposition',
+        `attachment; filename=${element.fileName}`,
+      );
     }
   });
   await next();
@@ -110,26 +113,39 @@ router.post('/api/user/login', async (ctx, next) => {
 router.post('/api/books', async (ctx, next) => {
   const book = JSON.parse(ctx.request.body);
   books.push(book);
+  
+  console.log(ctx.request.body);
+  // ctx.body = 'ok';
+  ctx.body = JSON.stringify(ctx.request.body); 
   await next();
 });
 
-router.post('/api/books/:id', async (ctx, next) => {
+router.get('/api/favotites/books', async (ctx, next) => {
+  ctx.body = JSON.stringify(
+    books.filter((element) => element.favorite === true),
+  );
+  await next();
+});
+
+router.post('/api/favorites/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
       elem.favorite = true;
     }
   });
+  ctx.body = 'ok';
   await next();
 });
 
-router.del('/api/books/:id', async (ctx, next) => {
+router.del('/api/favorites/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
       elem.favorite = false;
     }
   });
+  ctx.body = 'ok';
   await next();
 });
 

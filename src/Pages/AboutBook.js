@@ -11,7 +11,7 @@ export default function AboutBook({
 
   const downloadHandler = (e) => {
     e.preventDefault();
-    window.open(`http://localhost:7071/api/books/${key}`);
+    window.open(`${process.env.REACT_APP_URL}/api/books/${key}`);
   };
 
   const dowloadBtn = !localStorage.mail ? null : (

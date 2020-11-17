@@ -60,7 +60,7 @@ export default function BooksHandler() {
 
   const sendForm = async (event) => {
     event.preventDefault();
-    const url = 'http://localhost:7071/api/books';
+    const url = `${process.env.REACT_APP_URL}/api/books`;
     const body = {
       fileCover: bookCover,
       fileBook: bookFile.file,
@@ -69,16 +69,27 @@ export default function BooksHandler() {
     };
     body.key = uuidv4();
 
-    await fetch(url, {
+    // const formData = new FormData();
+    // formData.append('username', 'Groucho');
+
+    const response = await fetch(url, {
       method: 'POST',
-      mode: 'no-cors',
+      // mode: 'no-cors',
       body: JSON.stringify(body),
+      // body: formData,
     });
-    window.location.reload();
+
+    if (response.ok) {
+      // const result = await response.json();
+      // console.log(result);
+      window.location.reload();
+    } else {
+      throw Error(response.statusText);
+    }
   };
   const [cards, setCards] = useState([]);
   useEffect(() => {
-    const url = 'http://localhost:7071/api/books';
+    const url = `${process.env.REACT_APP_URL}/api/books`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {

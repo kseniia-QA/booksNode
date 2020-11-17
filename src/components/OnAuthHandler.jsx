@@ -5,14 +5,22 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Header from './Header';
 import Home from '../Pages/Home';
 import AboutBook from '../Pages/AboutBook';
+import Favorites from '../Pages/Favorites';
 
 export default function OnAuthHandler() {
-  const form = {
+  const [form, setForm] = useState({
     mail: '',
     pass: '',
-  };
+  });
+
   const changeForm = (event) => {
-    form[event.target.id] = event.target.value;
+    const { id } = event.target;
+    const formElement = {};
+    formElement[id] = event.target.value;
+    setForm({
+      ...form,
+      ...formElement,
+    });
   };
 
   const [switchStatus, setStatus] = useState(false);
@@ -28,12 +36,12 @@ export default function OnAuthHandler() {
   const sendForm = async (event) => {
     event.preventDefault();
     disabelModal();
-    const url = 'http://localhost:7071/api/user/login';
-
+    const url = `${process.env.REACT_APP_URL}/api/user/login`;
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(form),
     });
+    if (!response.ok) throw Error(response.statusText);
 
     const result = await response.json();
     if (!result.id) {
@@ -94,6 +102,7 @@ export default function OnAuthHandler() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/book/:bookId" component={AboutBook} />
+          <Route exact path="/favorites" component={Favorites} />
         </Switch>
       </Router>
     </>
