@@ -4,11 +4,9 @@ import { Container, Button, Col, Row } from 'react-bootstrap';
 
 export default function AboutBook({
   location: {
-    state: { title, description, fileCover, fileBook, authors, key },
+    state: { title, description, fileCover, authors, key },
   },
 }) {
-  console.log(fileBook);
-
   const downloadHandler = (e) => {
     e.preventDefault();
     window.open(`${process.env.REACT_APP_URL}/api/books/${key}`);
@@ -41,10 +39,8 @@ AboutBook.propTypes = {
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       fileCover: PropTypes.string.isRequired,
-      fileBook: PropTypes.shape.isRequired,
       authors: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
-      favorite: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
 };

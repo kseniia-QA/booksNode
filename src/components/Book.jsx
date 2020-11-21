@@ -78,6 +78,6 @@ Book.propTypes = {
     fileBook: PropTypes.shape.isRequired,
     authors: PropTypes.string.isRequired,
     key: PropTypes.string.isRequired,
-    favorite: PropTypes.bool.isRequired,
+    favorite: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -111,18 +111,14 @@ router.post('/api/user/login', async (ctx, next) => {
 });
 
 router.post('/api/books', async (ctx, next) => {
-  const book = JSON.parse(ctx.request.body);
-  books.push(book);
-  
-  console.log(ctx.request.body);
-  // ctx.body = 'ok';
-  ctx.body = JSON.stringify(ctx.request.body); 
+  books.push(ctx.request.body);
+  ctx.body = JSON.stringify(ctx.request.body);
   await next();
 });
 
 router.get('/api/favotites/books', async (ctx, next) => {
   ctx.body = JSON.stringify(
-    books.filter((element) => element.favorite === true),
+    books.filter((element) => element.favorite === 'true'),
   );
   await next();
 });
@@ -131,7 +127,7 @@ router.post('/api/favorites/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
-      elem.favorite = true;
+      elem.favorite = 'true';
     }
   });
   ctx.body = 'ok';
@@ -142,7 +138,7 @@ router.del('/api/favorites/books/:id', async (ctx, next) => {
   books.forEach((element) => {
     if (element.key === ctx.params.id) {
       const elem = element;
-      elem.favorite = false;
+      elem.favorite = '';
     }
   });
   ctx.body = 'ok';

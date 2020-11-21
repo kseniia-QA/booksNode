@@ -9,79 +9,68 @@ export default function BooksHandler() {
   const openForm = () => formShow(true);
   const closeForm = () => formShow(false);
 
-  const [fail, setFail] = useState({ class: '', message: '' }); // показ ошибки при неправильной обложки
+  const [fail, setFail] = useState({ class: '', message: '' }); // показ ошибки при неправильной обложке
   const invalidImage = () => {
     setFail({ class: 'show', message: 'Неправильный тип файла' });
     setTimeout(() => setFail({ class: '', message: null }), 5000);
   };
 
   const [bookCover, setBookCover] = useState(defaultBookCover);
-  const [bookFile, setBookFile] = useState({});
 
-  const [form, setForm] = useState({
-    title: '',
-    description: '',
-    authors: '',
-    favorite: false,
-  });
+  const formData = new FormData();
+  formData.append('title', '');
+  formData.append('description', '');
+  formData.append('authors', '');
+  formData.append('favorite', '');
+  formData.append('fileCover', bookCover);
+
+  const [form] = useState(formData);
   const changeForm = async (event) => {
     const { id } = event.target;
-    const formElement = {};
     if (event.target.files) {
       const files = event.target.files[0];
-
       if (!files) return;
+
       const filesType = files.type.split('/')[0];
 
       if (filesType !== 'image' && id === 'fileCover') {
         invalidImage();
         return;
       }
+
       const reader = new FileReader();
       reader.readAsDataURL(files);
       reader.onload = () => {
         if (id === 'fileCover') {
+          form.set('fileCover', reader.result);
           setBookCover(reader.result);
         } else {
-          const bookFileReader = { file: reader.result, fileName: files.name };
-          setBookFile(bookFileReader);
+          form.set('fileBook', reader.result);
+          form.set('fileName', files.name);
         }
       };
     } else if (id === 'favorite') {
-      formElement[id] = !!(!formElement[id] && form.favorite !== true);
+      if (form.get('favorite')) {
+        form.set('favorite', '');
+      } else {
+        form.set('favorite', true);
+      }
     } else {
-      formElement[id] = event.target.value;
+      form.set(`${id}`, `${event.target.value}`);
     }
-    setForm({
-      ...form,
-      ...formElement,
-    });
   };
 
   const sendForm = async (event) => {
     event.preventDefault();
     const url = `${process.env.REACT_APP_URL}/api/books`;
-    const body = {
-      fileCover: bookCover,
-      fileBook: bookFile.file,
-      fileName: bookFile.fileName,
-      ...form,
-    };
-    body.key = uuidv4();
-
-    // const formData = new FormData();
-    // formData.append('username', 'Groucho');
+    form.set('key', uuidv4());
 
     const response = await fetch(url, {
       method: 'POST',
-      // mode: 'no-cors',
-      body: JSON.stringify(body),
-      // body: formData,
+      body: form,
     });
 
     if (response.ok) {
-      // const result = await response.json();
-      // console.log(result);
       window.location.reload();
     } else {
       throw Error(response.statusText);
