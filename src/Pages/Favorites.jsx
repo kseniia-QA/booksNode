@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Container, CardDeck, Card } from 'react-bootstrap';
-import { v4 as uuidv4 } from 'uuid';
-import Book from '../components/book/Book';
+import React, { useEffect, useState } from 'react';
+import { Card, CardDeck, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import BooksDeck from '../components/book/BooksDeck';
 
 export default function Favorites() {
   const [cards, setCards] = useState([]);
@@ -14,29 +14,31 @@ export default function Favorites() {
       });
   }, []);
 
-  const noBooks = (
-    <>
-      <Card
-        className="btn ml-auto mr-auto mt-5 font-weight-bold text-info"
-        style={{
-          maxWidth: '300px',
-          minWidth: '150px',
-          textAlign: 'center',
-          border: '3px solid black',
-        }}
-      >
-        Please add some book to favorit on home page!
-      </Card>
-    </>
-  );
+  if (!cards.length) {
+    return (
+      <Container>
+        <CardDeck className="d-flex flex-wrap">
+          <Card
+            className="btn ml-auto mr-auto mt-5 font-weight-bold text-info"
+            style={{
+              maxWidth: '300px',
+              minWidth: '150px',
+              textAlign: 'center',
+              border: '3px solid black',
+            }}
+          >
+            <Link to="/">
+              Please add some book to favorit on home page!
+            </Link>
+          </Card>
+        </CardDeck>
+      </Container>
+    );
+  }
 
   return (
-    <Container>
-      <CardDeck className="d-flex flex-wrap">
-        {cards.length
-          ? cards.map((elem) => <Book props={elem} key={uuidv4()} />)
-          : noBooks}
-      </CardDeck>
-    </Container>
+    <BooksDeck
+      cards={cards}
+    />
   );
 }

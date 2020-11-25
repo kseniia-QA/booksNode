@@ -24,12 +24,13 @@ export default function BooksDeck({
 }
 
 BooksDeck.propTypes = {
-  openForm: PropTypes.func.isRequired,
+  openForm: PropTypes.func,
   AddBookCard: PropTypes.func,
   // eslint-disable-next-line react/forbid-prop-types
   cards: PropTypes.any.isRequired,
 };
 
 BooksDeck.defaultProps = {
-  AddBookCard: <></>,
+  AddBookCard: () => <></>,
+  openForm: () => null,
 };

@@ -4,8 +4,8 @@ import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default function Book({
-  props: { title, fileCover, authors, key, favorite, description },
-}) {
+                               props: { title, fileCover, authors, key, favorite, description },
+                             }) {
   const btn = !favorite ? (
     <Button variant="success">Add to favorite</Button>
   ) : (
@@ -18,12 +18,12 @@ export default function Book({
       const url = `${process.env.REACT_APP_URL}/api/favorites/books/${key}`;
       const response = !favorite
         ? await fetch(url, {
-            method: 'POST',
-            body: key,
-          })
+          method: 'POST',
+          body: key,
+        })
         : await fetch(url, {
-            method: 'DELETE',
-          });
+          method: 'DELETE',
+        });
       if (response.ok) {
         window.location.reload();
       } else {
@@ -34,38 +34,38 @@ export default function Book({
 
   return (
     <>
-      <Card
-        className="btn mt-3"
-        onClick={onClick}
-        key={key}
+      <Link
+        className="mt-3"
         style={{
-          maxWidth: '300px',
-          minWidth: '150px',
-          textAlign: 'center',
+          textDecoration: 'none',
+          position: 'relative',
+          color: '#000',
+        }}
+        to={{
+          pathname: `book/${key}`,
+          state: {
+            ...{ title, description, fileCover, authors, favorite, key },
+          },
         }}
       >
-        <Link
+        <Card
+          className="h-100"
+          onClick={onClick}
+          key={key}
           style={{
-            textDecoration: 'none',
-            color: 'white',
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-          }}
-          to={{
-            pathname: `book/${key}`,
-            state: {
-              ...{ title, description, fileCover, authors, favorite, key },
-            },
+            maxWidth: '300px',
+            minWidth: '150px',
+            textAlign: 'center',
           }}
         >
-          <Card.Title style={{ margin: 'auto' }}>{title}</Card.Title>
-          <Card.Img src={fileCover} />
-          <Card.Text style={{ margin: 'auto' }}>{authors}</Card.Text>
-        </Link>
-        {localStorage.mail ? btn : null}
-      </Card>
+          <Card.Img variant="top" src={fileCover} />
+          <Card.Body>
+            <Card.Title style={{ margin: 'auto' }}>{title}</Card.Title>
+            <Card.Text style={{ margin: 'auto' }}>{authors}</Card.Text>
+          </Card.Body>
+          {localStorage.mail ? (<Card.Footer>{btn}</Card.Footer>) : null}
+        </Card>
+      </Link>
     </>
   );
 }
