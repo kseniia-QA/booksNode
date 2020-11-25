@@ -88,17 +88,17 @@ export default function OnAuthHandler() {
 
   return (
     <>
-      <Header
-        sendForm={sendForm}
-        changeForm={changeForm}
-        switchStatus={switchStatus}
-        valid={valid}
-        handleClose={handleClose}
-        handleShow={handleShow}
-        show={show}
-        logBtn={logBtn}
-      />
       <Router>
+        <Header
+          sendForm={sendForm}
+          changeForm={changeForm}
+          switchStatus={switchStatus}
+          valid={valid}
+          handleClose={handleClose}
+          handleShow={handleShow}
+          show={show}
+          logBtn={logBtn}
+        />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/book/:bookId" component={AboutBook} />

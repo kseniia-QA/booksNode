@@ -1,17 +1,18 @@
 import React from 'react';
-import { Navbar, Container, Nav, Form, Button, Modal } from 'react-bootstrap';
+import { Button, Container, Form, Modal, Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import logo from '../img/books_image.png';
 
 export default function Header({
-  changeForm,
-  sendForm,
-  switchStatus,
-  valid,
-  handleClose,
-  show,
-  logBtn,
-}) {
+                                 changeForm,
+                                 sendForm,
+                                 switchStatus,
+                                 valid,
+                                 handleClose,
+                                 show,
+                                 logBtn,
+                               }) {
   return (
     <>
       <Navbar
@@ -21,16 +22,18 @@ export default function Header({
         }}
       >
         <Container>
-          <Navbar.Brand href="/" className="text-light">
-            <img
-              src={logo}
-              height="40"
-              width="40"
-              className="d-inline-block align-top"
-              alt="Logo"
-            />
-            <span className="ml-2">Books list</span>
-          </Navbar.Brand>
+          <Link to="/">
+            <Navbar.Brand className="text-light">
+              <img
+                src={logo}
+                height="40"
+                width="40"
+                className="d-inline-block align-top"
+                alt="Logo"
+              />
+              <span className="ml-2">Books list</span>
+            </Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             {localStorage.mail ? (
