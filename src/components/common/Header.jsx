@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container, Form, Modal, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import logo from '../img/books_image.png';
+import logo from '../../img/books_image.png';
 
 export default function Header({
                                  changeForm,

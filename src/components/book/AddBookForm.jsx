@@ -1,8 +1,8 @@
 import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import defaultBookCover from '../img/book';
-import readFile from '../utils/read-file';
+import defaultBookCover from '../../img/book';
+import readFile from '../../utils/read-file';
 
 export default function AddBookForm({
                                closeForm,

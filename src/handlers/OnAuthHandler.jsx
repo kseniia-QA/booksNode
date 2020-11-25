@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import Header from './Header';
+import Header from '../components/common/Header';
 import Home from '../Pages/Home';
 import AboutBook from '../Pages/AboutBook';
 import Favorites from '../Pages/Favorites';

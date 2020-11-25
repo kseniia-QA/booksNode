@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import defaultAddBook from '../img/addBook';
+import defaultAddBook from '../../img/addBook';
 
 export default function AddBookCard({ openForm }) {
   if (!localStorage.mail) return null;

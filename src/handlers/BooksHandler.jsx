@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from 'react-bootstrap';
-import BooksDeck from './BooksDeck';
-import AddBookCard from './AddBookCard';
-import AddBookForm from './AddBookForm';
+import BooksDeck from '../components/book/BooksDeck';
+import AddBookCard from '../components/book/AddBookCard';
+import AddBookForm from '../components/book/AddBookForm';
 
 export default function BooksHandler() {
   const [books, setBooks] = useState([]);

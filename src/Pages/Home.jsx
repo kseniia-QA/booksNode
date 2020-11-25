@@ -1,5 +1,5 @@
 import React from 'react'
-import BooksHandler from '../components/BooksHandler';
+import BooksHandler from '../handlers/BooksHandler';
 
 export default function Home() {
   return (

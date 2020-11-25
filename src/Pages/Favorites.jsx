@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, CardDeck, Card } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
-import Book from '../components/Book';
+import Book from '../components/book/Book';
 
 export default function Favorites() {
   const [cards, setCards] = useState([]);
