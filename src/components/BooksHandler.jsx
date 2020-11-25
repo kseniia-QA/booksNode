@@ -71,7 +71,7 @@ export default function BooksHandler() {
     });
 
     if (response.ok) {
-      window.location.reload();
+      // window.location.reload();
     } else {
       throw Error(response.statusText);
     }
