@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 const Koa = require('koa');
 const Router = require('koa-router');
 const koaBody = require('koa-body');
@@ -58,6 +59,7 @@ app.use(async (ctx, next) => {
 });
 
 const books = [];
+const files = {};
 
 app.use(async (ctx, next) => {
   ctx.response.set({
@@ -73,23 +75,21 @@ router.get('/api/books', async (ctx, next) => {
 });
 
 router.get('/api/books/:id', async (ctx, next) => {
-  books.forEach((element) => {
-    if (element.key === ctx.params.id) {
-      const file = element.fileBook;
-      const regex = /^data:.+\/(.+);base64,(.*)$/;
+  const book = books.find((item) => item.key === ctx.params.id);
+  if (!book) {
+    ctx.throw(404);
+  }
+  ctx.body = JSON.stringify(book)
+  await next();
+});
+router.get('/api/books/:id/download', async (ctx, next) => {
+  const file = files[ctx.params.id];
+  if (!file) {
+    ctx.throw(404);
+  }
 
-      const matches = file.match(regex);
-      const data = matches[2];
-      const buffer = Buffer.from(data, 'base64');
-
-      ctx.body = buffer;
-
-      ctx.set(
-        'Content-disposition',
-        `attachment; filename=${element.fileName}`,
-      );
-    }
-  });
+  ctx.response.set('content-type', file.type);
+  ctx.body = fs.createReadStream(file.path);
   await next();
 });
 
@@ -111,8 +111,10 @@ router.post('/api/user/login', async (ctx, next) => {
 });
 
 router.post('/api/books', async (ctx, next) => {
-  books.push(ctx.request.body);
-  ctx.body = JSON.stringify(ctx.request.body);
+  const book = ctx.request.body;
+  books.push(book);
+  files[book.key] = ctx.request.files.fileBook;
+  ctx.body = JSON.stringify(book);
   await next();
 });
 

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Header from '../components/common/Header';
 import Home from '../Pages/Home';
-import AboutBook from '../Pages/AboutBook';
+import BookPage from '../Pages/BookPage';
 import Favorites from '../Pages/Favorites';
 
 export default function OnAuthHandler() {
@@ -101,7 +101,7 @@ export default function OnAuthHandler() {
         />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/book/:bookId" component={AboutBook} />
+          <Route exact path="/book/:bookId" component={BookPage} />
           <Route exact path="/favorites" component={Favorites} />
         </Switch>
       </Router>

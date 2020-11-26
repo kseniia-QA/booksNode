@@ -1,21 +1,16 @@
 import React from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Container, Button, Col, Row } from 'react-bootstrap';
 
-export default function AboutBook({
-  location: {
-    state: { title, description, fileCover, authors, key },
-  },
-}) {
+export default function AboutBook({ title, description, fileCover, authors, id }) {
   const downloadHandler = (e) => {
     e.preventDefault();
-    window.open(`${process.env.REACT_APP_URL}/api/books/${key}`);
+    window.open(`${process.env.REACT_APP_URL}/api/books/${id}/download`);
   };
 
   const dowloadBtn = !localStorage.mail ? null : (
     <Button onClick={downloadHandler}>Dowload book</Button>
   );
-
   return (
     <Container className="mt-3">
       <Row>
@@ -30,17 +25,13 @@ export default function AboutBook({
         </Col>
       </Row>
     </Container>
-  );
+)
 }
 
 AboutBook.propTypes = {
-  location: PropTypes.shape({
-    state: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      fileCover: PropTypes.string.isRequired,
-      authors: PropTypes.string.isRequired,
-      key: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  fileCover: PropTypes.string.isRequired,
+  authors: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
