@@ -1,10 +1,7 @@
 /* eslint-disable no-undef */
 describe('mainPage', () => {
 
-    beforeEach(() => {
-       
-        cy.viewport(1280, 720)
-        cy.viewport('iphone-5')
+  
 
 it('Checks the main page content', () => {
       cy.visit('/')
