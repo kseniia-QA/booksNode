@@ -29,8 +29,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "test:headless": "cypress run headless",
-    "test:headed": "cypress run --headed "
+    "bigHeadedChrome": "npx cypress run -b chrome --headed -C cypress.env.json",
+		"littleHeadlessChrome": "npx cypress run -b chrome",
+		"bigHeadedElectron": "npx cypress run -b electron --headed -C cypress.env.json",
+		"littleHeadlessElectron": "npx cypress run -b electron"
   },
     
 
