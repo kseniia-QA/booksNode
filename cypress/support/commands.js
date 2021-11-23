@@ -32,12 +32,5 @@ Cypress.Commands.add('addTitle', (selector, content) => {
 Cypress.Commands.add('addAuthor', (selector, content) => {
     cy.get(selector).type(content)
 })
-
-beforeEach(() => {
-Cypress.Commands.add('Port1', () => {
-    cy.viewport('iphone-5')
-Cypress.Commands.add('Port2', () => {
-    cy.viewport(320, 480)
-})
 })
 })
